@@ -1,201 +1,303 @@
-import React, { useState } from 'react';
-import { User, Calendar, Brain, Palette, Music, Tv, Utensils, Instagram, Terminal, ChevronRight, Shield } from 'lucide-react';
-
-export default function App() {
-  const [activeInfo, setActiveInfo] = useState('basic');
-
-  const infoData = {
-    basic: {
-      id: 'basic',
-      title: "Basic Information",
-      buttonText: "Who am I?",
-      icon: <User className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><User className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Name:</strong> Mari</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Calendar className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Birthday:</strong> 06/04/2009</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Brain className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">MBTI:</strong> INTP</span>
-          </div>
-        </div>
-      )
-    },
-    hobbies: {
-      id: 'hobbies',
-      title: "Hobbies & Interests",
-      buttonText: "What do I do?",
-      icon: <Palette className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Palette className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Hobby:</strong> Drawing</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Music className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Interest:</strong> Listening to music</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Tv className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Interest:</strong> Watching anime</span>
-          </div>
-        </div>
-      )
-    },
-    favorites: {
-      id: 'favorites',
-      title: "Favorites",
-      buttonText: "What do I like?",
-      icon: <Utensils className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Utensils className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300"><strong className="text-white font-mono text-lg">Favorite Food:</strong> Curry rice & Ramen</span>
-          </div>
-        </div>
-      )
-    },
-    social: {
-      id: 'social',
-      title: "Social Media",
-      buttonText: "Where to find me?",
-      icon: <Instagram className="w-5 h-5" />,
-      content: (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg"><Instagram className="w-5 h-5 text-emerald-400"/></div>
-            <span className="text-slate-300 flex items-center gap-2">
-              <strong className="text-white font-mono text-lg">Instagram:</strong> 
-              <a href="https://instagram.com/espionage06210" target="_blank" rel="noopener noreferrer" 
-                 className="text-emerald-400 hover:text-emerald-300 transition-colors duration-300 flex items-center gap-1 group">
-                @espionage06210
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
-              </a>
-            </span>
-          </div>
-        </div>
-      )
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mari - Portfolio</title>
+  
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- 自訂 Tailwind 設定 (加入自訂動畫) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+          }
+        }
+      }
     }
-  };
+  </script>
 
-  return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-6 md:p-12 flex items-center justify-center selection:bg-emerald-500/30">
-      
-      {/* Main Container */}
-      <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <!-- 引入 Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 自訂 CSS 動畫 -->
+  <style>
+    @keyframes slideUpFade {
+      from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+    .animate-content {
+      animation: slideUpFade 0.5s ease-out forwards;
+    }
+    /* 確保所有按鈕過渡平滑 */
+    .transition-all {
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 300ms;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-200 font-sans p-6 md:p-12 flex items-center justify-center selection:bg-emerald-500/30">
+
+  <!-- Main Container -->
+  <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- Left Column: Profile & Intro -->
+    <div class="lg:col-span-5 space-y-6">
+      <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm relative overflow-hidden group">
+        <!-- Decorative background glow -->
+        <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none transition-all duration-500 group-hover:bg-emerald-500/20"></div>
         
-        {/* Left Column: Profile & Intro */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm relative overflow-hidden group">
-            {/* Decorative background glow */}
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none transition-all duration-500 group-hover:bg-emerald-500/20"></div>
-            
-            <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-              <div className="w-40 h-40 rounded-full border-4 border-slate-800 overflow-hidden shadow-2xl relative">
-                <div className="absolute inset-0 border-2 border-emerald-500/30 rounded-full z-20 pointer-events-none"></div>
-                <img 
-                  src="67c0598f9c883KMw.jpg" 
-                  alt="Mari's favorite alien cat" 
-                  className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <div className="flex items-center justify-center gap-2 text-emerald-400 mb-2">
-                  <Terminal className="w-4 h-4" />
-                  <span className="font-mono text-sm tracking-wider uppercase">System.User</span>
-                </div>
-                <h1 className="text-3xl font-bold text-white tracking-tight">Mari</h1>
-                <p className="text-emerald-400/80 font-mono text-sm">@ Fuxing Senior High School</p>
-              </div>
-            </div>
+        <div class="relative z-10 flex flex-col items-center text-center space-y-4">
+          <div class="w-40 h-40 rounded-full border-4 border-slate-800 overflow-hidden shadow-2xl relative">
+            <div class="absolute inset-0 border-2 border-emerald-500/30 rounded-full z-20 pointer-events-none"></div>
+            <img 
+              src="67c0598f9c883KMw.jpg" 
+              alt="Mari's favorite alien cat" 
+              class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
+            />
           </div>
-
-          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm relative">
-             <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500/50 rounded-l-2xl"></div>
-             <p className="text-slate-300 leading-relaxed space-y-4 text-sm md:text-base">
-                <span className="block mb-2 text-white/90">
-                  Hello! I am Mari from the <span className="text-emerald-400 font-medium">information security class</span>.
-                </span>
-                <span className="block mb-2">
-                  I get nervous easily and my moods can be a bit volatile <span className="inline-block animate-bounce-slow text-emerald-300">(;´д｀)</span>.
-                </span>
-                <span className="block">
-                  I like to draw and watch anime, and a lot of my drawings are of characters.
-                </span>
-             </p>
-          </div>
-        </div>
-
-        {/* Right Column: Interactive Dashboard */}
-        <div className="lg:col-span-7 flex flex-col h-full space-y-6">
           
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {Object.keys(infoData).map((key) => {
-              const isActive = activeInfo === key;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveInfo(key)}
-                  className={`relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group ${
-                    isActive 
-                      ? 'bg-emerald-500/10 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]' 
-                      : 'bg-slate-900/50 border-slate-800 hover:bg-slate-800/50 hover:border-slate-700'
-                  }`}
-                >
-                  {/* Hover effect background */}
-                  <div className={`absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700 ${isActive ? '' : 'group-hover:translate-x-[100%]'}`}></div>
-                  
-                  <div className="flex items-center gap-3 relative z-10">
-                    <div className={`${isActive ? 'text-emerald-400' : 'text-slate-400 group-hover:text-slate-300'} transition-colors duration-300`}>
-                      {infoData[key].icon}
-                    </div>
-                    <span className={`font-medium text-sm sm:text-base ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'} transition-colors duration-300`}>
-                      {infoData[key].buttonText}
-                    </span>
-                  </div>
-                  
-                  <ChevronRight className={`w-4 h-4 transition-all duration-300 ${isActive ? 'text-emerald-400 translate-x-0 opacity-100' : 'text-slate-600 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'}`} />
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Dynamic Content Display */}
-          <div className="flex-grow bg-slate-900/50 border border-slate-800 rounded-2xl p-6 md:p-8 backdrop-blur-sm shadow-xl relative overflow-hidden min-h-[250px]">
-            {/* Terminal Top Bar styling */}
-            <div className="absolute top-0 left-0 right-0 h-10 bg-slate-950/50 border-b border-slate-800 flex items-center px-4 gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
-              <div className="ml-4 font-mono text-xs text-slate-500 flex items-center gap-2">
-                <Shield className="w-3 h-3" /> ~/mari/{infoData[activeInfo].id}.sys
-              </div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-center gap-2 text-emerald-400 mb-2">
+              <i data-lucide="terminal" class="w-4 h-4"></i>
+              <span class="font-mono text-sm tracking-wider uppercase">System.User</span>
             </div>
-
-            <div className="pt-8">
-              <h2 className="text-2xl font-bold text-white mb-6 font-mono flex items-center gap-2">
-                <span className="text-emerald-500">{'>'}</span> 
-                {infoData[activeInfo].title}
-                <span className="w-2 h-5 bg-emerald-500/70 animate-pulse inline-block ml-1"></span>
-              </h2>
-              
-              <div className="text-lg">
-                {infoData[activeInfo].content}
-              </div>
-            </div>
+            <h1 class="text-3xl font-bold text-white tracking-tight">Mari</h1>
+            <p class="text-emerald-400/80 font-mono text-sm">@ Fuxing Senior High School</p>
           </div>
-
         </div>
       </div>
+
+      <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 backdrop-blur-sm relative">
+         <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500/50 rounded-l-2xl"></div>
+         <p class="text-slate-300 leading-relaxed space-y-4 text-sm md:text-base">
+            <span class="block mb-2 text-white/90">
+              Hello! I am Mari from the <span class="text-emerald-400 font-medium">information security class</span>.
+            </span>
+            <span class="block mb-2">
+              I get nervous easily and my moods can be a bit volatile <span class="inline-block animate-bounce-slow text-emerald-300">(&#59;&#180;&#1076;&#96; )</span>.
+            </span>
+            <span class="block">
+              I like to draw and watch anime, and a lot of my drawings are of characters.
+            </span>
+         </p>
+      </div>
     </div>
-  );
-}
+
+    <!-- Right Column: Interactive Dashboard -->
+    <div class="lg:col-span-7 flex flex-col h-full space-y-6">
+      
+      <!-- Buttons Grid -->
+      <div class="grid grid-cols-2 gap-3 sm:gap-4">
+        
+        <!-- Button: Basic Information -->
+        <button id="btn-basic" onclick="switchTab('basic')" class="tab-btn active relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-emerald-500/10 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+          <div class="hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700"></div>
+          <div class="flex items-center gap-3 relative z-10">
+            <div class="icon-wrapper transition-colors duration-300 text-emerald-400">
+              <i data-lucide="user" class="w-5 h-5"></i>
+            </div>
+            <span class="btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-white">
+              Who am I?
+            </span>
+          </div>
+          <i data-lucide="chevron-right" class="chevron-icon w-4 h-4 transition-all duration-300 text-emerald-400 translate-x-0 opacity-100"></i>
+        </button>
+
+        <!-- Button: Hobbies -->
+        <button id="btn-hobbies" onclick="switchTab('hobbies')" class="tab-btn relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-slate-900/50 border-slate-800 hover:bg-slate-800/50 hover:border-slate-700">
+          <div class="hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700 group-hover:translate-x-[100%]"></div>
+          <div class="flex items-center gap-3 relative z-10">
+            <div class="icon-wrapper transition-colors duration-300 text-slate-400 group-hover:text-slate-300">
+              <i data-lucide="palette" class="w-5 h-5"></i>
+            </div>
+            <span class="btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-slate-300 group-hover:text-white">
+              What do I do?
+            </span>
+          </div>
+          <i data-lucide="chevron-right" class="chevron-icon w-4 h-4 transition-all duration-300 text-slate-600 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"></i>
+        </button>
+
+        <!-- Button: Favorites -->
+        <button id="btn-favorites" onclick="switchTab('favorites')" class="tab-btn relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-slate-900/50 border-slate-800 hover:bg-slate-800/50 hover:border-slate-700">
+          <div class="hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700 group-hover:translate-x-[100%]"></div>
+          <div class="flex items-center gap-3 relative z-10">
+            <div class="icon-wrapper transition-colors duration-300 text-slate-400 group-hover:text-slate-300">
+              <i data-lucide="utensils" class="w-5 h-5"></i>
+            </div>
+            <span class="btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-slate-300 group-hover:text-white">
+              What do I like?
+            </span>
+          </div>
+          <i data-lucide="chevron-right" class="chevron-icon w-4 h-4 transition-all duration-300 text-slate-600 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"></i>
+        </button>
+
+        <!-- Button: Social Media -->
+        <button id="btn-social" onclick="switchTab('social')" class="tab-btn relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-slate-900/50 border-slate-800 hover:bg-slate-800/50 hover:border-slate-700">
+          <div class="hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700 group-hover:translate-x-[100%]"></div>
+          <div class="flex items-center gap-3 relative z-10">
+            <div class="icon-wrapper transition-colors duration-300 text-slate-400 group-hover:text-slate-300">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </div>
+            <span class="btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-slate-300 group-hover:text-white">
+              Where to find me?
+            </span>
+          </div>
+          <i data-lucide="chevron-right" class="chevron-icon w-4 h-4 transition-all duration-300 text-slate-600 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"></i>
+        </button>
+
+      </div>
+
+      <!-- Dynamic Content Display -->
+      <div class="flex-grow bg-slate-900/50 border border-slate-800 rounded-2xl p-6 md:p-8 backdrop-blur-sm shadow-xl relative overflow-hidden min-h-[250px]">
+        <!-- Terminal Top Bar styling -->
+        <div class="absolute top-0 left-0 right-0 h-10 bg-slate-950/50 border-b border-slate-800 flex items-center px-4 gap-2">
+          <div class="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50"></div>
+          <div class="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50"></div>
+          <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50"></div>
+          <div class="ml-4 font-mono text-xs text-slate-500 flex items-center gap-2">
+            <i data-lucide="shield" class="w-3 h-3"></i> 
+            <span id="terminal-path">~/mari/basic.sys</span>
+          </div>
+        </div>
+
+        <div class="pt-8">
+          <h2 class="text-2xl font-bold text-white mb-6 font-mono flex items-center gap-2">
+            <span class="text-emerald-500">></span> 
+            <span id="content-title">Basic Information</span>
+            <span class="w-2 h-5 bg-emerald-500/70 animate-pulse inline-block ml-1"></span>
+          </h2>
+          
+          <div class="text-lg">
+            
+            <!-- Content: Basic -->
+            <div id="content-basic" class="tab-content block animate-content space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="user" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Name:</strong> Mari</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="calendar" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Birthday:</strong> 06/04/2009</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="brain" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">MBTI:</strong> INTP</span>
+              </div>
+            </div>
+
+            <!-- Content: Hobbies -->
+            <div id="content-hobbies" class="tab-content hidden space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="palette" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Hobby:</strong> Drawing</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="music" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Interest:</strong> Listening to music</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="tv" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Interest:</strong> Watching anime</span>
+              </div>
+            </div>
+
+            <!-- Content: Favorites -->
+            <div id="content-favorites" class="tab-content hidden space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="utensils" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300"><strong class="text-white font-mono text-lg">Favorite Food:</strong> Curry rice & Ramen</span>
+              </div>
+            </div>
+
+            <!-- Content: Social -->
+            <div id="content-social" class="tab-content hidden space-y-4">
+              <div class="flex items-center gap-3">
+                <div class="p-2 bg-emerald-500/10 rounded-lg"><i data-lucide="instagram" class="w-5 h-5 text-emerald-400"></i></div>
+                <span class="text-slate-300 flex items-center gap-2">
+                  <strong class="text-white font-mono text-lg">Instagram:</strong> 
+                  <a href="https://instagram.com/espionage06210" target="_blank" rel="noopener noreferrer" 
+                     class="text-emerald-400 hover:text-emerald-300 transition-colors duration-300 flex items-center gap-1 group/link">
+                    @espionage06210
+                    <i data-lucide="chevron-right" class="w-4 h-4 opacity-0 group-hover/link:opacity-100 transition-all -translate-x-2 group-hover/link:translate-x-0"></i>
+                  </a>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JavaScript for Interactions -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    const titles = {
+      'basic': 'Basic Information',
+      'hobbies': 'Hobbies & Interests',
+      'favorites': 'Favorites',
+      'social': 'Social Media'
+    };
+
+    function switchTab(tabId) {
+      // 1. Handle Content Visibility & Animation
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.add('hidden');
+        el.classList.remove('block', 'animate-content');
+      });
+      
+      const targetContent = document.getElementById('content-' + tabId);
+      targetContent.classList.remove('hidden');
+      targetContent.classList.add('block');
+      
+      // Trigger CSS animation reflow
+      void targetContent.offsetWidth; 
+      targetContent.classList.add('animate-content');
+
+      // 2. Update Titles
+      document.getElementById('terminal-path').innerText = `~/mari/${tabId}.sys`;
+      document.getElementById('content-title').innerText = titles[tabId];
+
+      // 3. Update Button Styles
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        // Reset to inactive styles
+        btn.className = "tab-btn relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-slate-900/50 border-slate-800 hover:bg-slate-800/50 hover:border-slate-700";
+        
+        btn.querySelector('.hover-bg').className = "hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700 group-hover:translate-x-[100%]";
+        
+        btn.querySelector('.icon-wrapper').className = "icon-wrapper transition-colors duration-300 text-slate-400 group-hover:text-slate-300";
+        btn.querySelector('.btn-text').className = "btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-slate-300 group-hover:text-white";
+        
+        btn.querySelector('.chevron-icon').className = "lucide lucide-chevron-right chevron-icon w-4 h-4 transition-all duration-300 text-slate-600 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0";
+      });
+
+      // Set active styles for the clicked button
+      const activeBtn = document.getElementById('btn-' + tabId);
+      activeBtn.className = "tab-btn active relative flex items-center justify-between p-4 rounded-xl border transition-all duration-300 overflow-hidden group bg-emerald-500/10 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]";
+      
+      activeBtn.querySelector('.hover-bg').className = "hover-bg absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-emerald-500/0 translate-x-[-100%] transition-transform duration-700";
+      
+      activeBtn.querySelector('.icon-wrapper').className = "icon-wrapper transition-colors duration-300 text-emerald-400";
+      activeBtn.querySelector('.btn-text').className = "btn-text font-medium text-sm sm:text-base transition-colors duration-300 text-white";
+      
+      activeBtn.querySelector('.chevron-icon').className = "lucide lucide-chevron-right chevron-icon w-4 h-4 transition-all duration-300 text-emerald-400 translate-x-0 opacity-100";
+    }
+  </script>
+</body>
+</html>
